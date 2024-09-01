@@ -1,9 +1,11 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const cors = require('cors');
 require("dotenv").config();
 const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -25,7 +27,7 @@ app.get('/', (req, res) => {
     res.send('Hello from Gemini!!!');
 })
 
-app.get('/api/generate', async (req, res) => {
+app.post('/api/generate', async (req, res) => {
     try {
         const data = req.body.question;
         const result = await generate(data);
